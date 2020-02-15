@@ -8,6 +8,7 @@ public class NumberWizard : MonoBehaviour
     int max;
     int currentGuess;
     bool isFirstMove = true;
+    bool isFirstPlay = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,18 +21,20 @@ public class NumberWizard : MonoBehaviour
         PlayGame();
     }
 
+    // Set default values and introduce the game.
     void InitializeGame()
     {
         min = 1;
         max = 1000;
         currentGuess = 500;
-        Debug.Log("Welcome, I am the Number Wizard.");
-        Debug.Log("Welcome to my little game.");
-        Debug.Log("I will be guessing a number that you pick.");
-        Debug.Log("The number will be between " + min + " and " + max + ".");
-        Debug.Log("Tell me if your number is higher or lower than " + currentGuess + ".");
-        Debug.Log("Press the up arrow key for higher, press the down arrow key for lower. Your guess cannot be " + currentGuess + ".");
-        Debug.Log("Press the enter key when it is correct.");
+        if(isFirstPlay)
+        {
+            FirstPlayDialogue();
+        }
+        else
+        {
+            PlayDialogue();
+        }
         max += 1;
         isFirstMove = true;
     }
@@ -53,6 +56,7 @@ public class NumberWizard : MonoBehaviour
             currentGuess = (min + max) / 2;
             Debug.Log("Is it higher or lower than: " + currentGuess + "?");
             isFirstMove = false;
+            isFirstPlay = false;
         }
         else if (Input.GetKeyDown(KeyCode.Return) && !isFirstMove)
         {
@@ -76,5 +80,22 @@ public class NumberWizard : MonoBehaviour
         {
             Debug.Log("Truly, I am the Number Wizard.");
         }
+    }
+
+    void FirstPlayDialogue()
+    {
+        Debug.Log("Welcome, I am the Number Wizard.");
+        Debug.Log("Welcome to my little game.");
+        Debug.Log("I will be guessing a number that you pick.");
+        Debug.Log("The number will be between " + min + " and " + max + ".");
+        Debug.Log("Tell me if your number is higher or lower than " + currentGuess + ".");
+        Debug.Log("Press the up arrow key for higher, press the down arrow key for lower. Your guess cannot be " + currentGuess + ".");
+        Debug.Log("Press the enter key when it is correct.");
+    }
+
+    void PlayDialogue()
+    {
+        Debug.Log("Pick a number between " + min + " and " + max + ". Use the arrow keys to select whether it is" +
+            "higher or lower and enter when it is correct.");
     }
 }
